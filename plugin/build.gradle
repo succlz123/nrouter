@@ -1,0 +1,51 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+// gradle upload
+apply plugin: "com.gradle.plugin-publish"
+apply plugin: "java-gradle-plugin"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:4.0.0'
+    implementation 'com.android.tools.build:gradle-api:4.0.0'
+    implementation 'org.javassist:javassist:3.25.0-GA'
+}
+
+// it is only use for gradle plugin upload or local debug
+version = "0.0.1"
+// classpath = group+directoryName+version - apply name = properties file name
+group = "org.succlz123.nrouter"
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            // repository(url: "http://www.xxx.com/repos") {
+            //    authentication(userName: "", password: "")
+            // }
+            repository(url: uri('./repo'))
+        }
+    }
+}
+
+gradlePlugin {
+    plugins {
+        greetingsPlugin {
+            id = 'org.succlz123.nrouter'
+            displayName = 'NRouter'
+            description = 'A router library for Android'
+            implementationClass = 'org.succlz123.nrouter.plugin.NRouterGradlePlugin'
+        }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/succlz123/nrouter'
+    vcsUrl = 'https://github.com/succlz123/nrouter.git'
+    tags = ['Android', 'Gradle', 'plugin', 'router']
+}
