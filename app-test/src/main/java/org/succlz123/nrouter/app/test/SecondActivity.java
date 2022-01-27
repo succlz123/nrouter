@@ -16,6 +16,7 @@ public class SecondActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+
         String str = getIntent().getStringExtra("params");
         ((TextView) findViewById(R.id.content)).setText("Go from First Activity " + str);
     }
